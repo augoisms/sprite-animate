@@ -256,7 +256,8 @@
         
 		var that,
 			canvas,
-			options;
+			options,
+			spriteImage;
 		
 		// Get canvas
 		canvas = this.el;
