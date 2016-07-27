@@ -52,6 +52,7 @@
 			loop: true,
 			jumpFrame: null,
 			debug: false,
+			onReady: function(){},
 			onFinish: function(){}
         };
 
@@ -87,7 +88,8 @@
 			numberOfFrames = options.numberOfFrames || 1,
 			loop = options.loop,
 			jumpFrame = options.jumpFrame,
-			debug = options.debug;
+			debug = options.debug,
+			onReady = options.onReady,
 			onFinish = options.onFinish;
 
 		that.context = options.context;
@@ -210,6 +212,10 @@
 			}
 		};
 
+		that.ready = function() {
+			onReady();
+		};
+
 
 		return that;
 	}
@@ -283,6 +289,7 @@
 				loop: options.loop,
 				jumpFrame: options.jumpFrame,
 				debug: options.debug,
+				onReady: options.onReady,
 				onFinish: options.onFinish
 			});
 			// render first frame
@@ -290,6 +297,11 @@
 			// remove background
 			$(canvas).addClass('loaded');
 			that._animationLoop();
+			// let everyone know it's ready!
+			// set a timeout to allow image to be painted and loop to be started
+			window.setTimeout(function() {
+				that.animation.ready();
+			}, 10);
 		});
 		// set image url
 		spriteImage.src = this.options.imgSrc;	
